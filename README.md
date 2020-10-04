@@ -1,10 +1,17 @@
 ## Data Structres
 
-SinglyLinkedList
-DobulyLinkedList
-Queue
-Stack
-BinarySearchTree
-BinaryHeap
-Grap
-HashTable
+###### SinglyLinkedList
+
+###### DobulyLinkedList
+
+###### Queue
+
+###### Stack
+
+###### BinarySearchTree
+
+###### BinaryHeap
+
+###### Graph
+
+###### HashTable
