@@ -1,83 +1,72 @@
-class PriorityQueue {
-  constructor() {
-    this.values = [];
-  }
-  enqueue(value, priority) {
-    this.values.push({ value, priority });
-    this.sort();
-  }
-  dequeue() {
-    return this.values.shift();
-  }
-  sort() {
-    this.values.sort((a, b) => a.priority - b.priority);
-  }
+function Queue() {
+  this.storage = [];
 }
 
-class WeightedGraph {
-  constructor() {
-    this.adjacencyList = {};
-  }
+Queue.prototype.enqueue = function (key, priority) {
+  this.storage = this.storage.filter((item) => item.key !== key);
+  this.storage.push({ key, priority });
+  this.storage.sort((a, b) => a.priority - b.priority);
+};
 
-  addVertex(vertex) {
-    if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
-  }
+Queue.prototype.dequeue = function () {
+  return this.storage.shift();
+};
 
-  addEdge(vertex1, vertex2, weight) {
-    this.adjacencyList[vertex1].push({ node: vertex2, weight });
-    this.adjacencyList[vertex2].push({ node: vertex1, weight });
-  }
+function Graph() {
+  this.adjacencyList = {};
+}
 
-  dijkstra(start, finish) {
-    const nodes = new PriorityQueue();
-    const distances = {};
-    const previous = {};
-    let path = []; // to return at end
-    let smallest;
-    // build up initial state
-    for (let vertex in this.adjacencyList) {
-      if (vertex === start) {
-        distances[vertex] = 0;
-        nodes.enqueue(vertex, 0);
-      } else {
-        distances[vertex] = Infinity;
-        nodes.enqueue(vertex, Infinity);
-      }
-      previous[vertex] = null;
+Graph.prototype.addVertex = function (vertex) {
+  if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+};
+
+Graph.prototype.addEdge = function (vertex1, vertex2, weight) {
+  this.adjacencyList[vertex1].push({ node: vertex2, weight });
+  this.adjacencyList[vertex2].push({ node: vertex1, weight });
+};
+
+Graph.prototype.dijkstra = function (start, finish) {
+  const queue = new Queue();
+  const distances = {};
+  const previous = {};
+  const shortestPath = [];
+  let smallest, candidate;
+
+  for (let node in this.adjacencyList) {
+    if (node === start) {
+      distances[node] = 0;
+      queue.enqueue(node, 0);
+    } else {
+      distances[node] = Infinity;
+      queue.enqueue(node, Infinity);
     }
-    // as long as there is something to visit
-    while (nodes.values.length) {
-      smallest = nodes.dequeue().value;
-      if (smallest === finish) {
-        while (previous[smallest]) {
-          path.push(smallest);
-          smallest = previous[smallest];
-        }
-        break;
+    previous[node] = null;
+  }
+
+  while (queue.storage.length) {
+    smallest = queue.dequeue().key;
+    if (smallest === finish) {
+      while (previous[smallest]) {
+        shortestPath.push(smallest);
+        smallest = previous[smallest];
       }
-      if (smallest || distances[smallest] !== Infinity) {
-        for (let neighbor in this.adjacencyList[smallest]) {
-          // find neighboring node
-          let nextNode = this.adjacencyList[smallest][neighbor];
-          // calculate new distance to neighboring nodes
-          let candidate = distances[smallest] + nextNode.weight;
-          let nextNeighbor = nextNode.node;
-          if (candidate < distances[nextNeighbor]) {
-            // updating new smalles distance to neighbor
-            distances[nextNeighbor] = candidate;
-            // updating previous - Ho we got to neighbor
-            previous[nextNeighbor] = smallest;
-            // enqueue in priority queue with new priority
-            nodes.enqueue(nextNeighbor, candidate);
-          }
+      break;
+    } else {
+      for (let neighbor of this.adjacencyList[smallest]) {
+        candidate = distances[smallest] + neighbor.weight;
+        if (candidate < distances[neighbor.node]) {
+          distances[neighbor.node] = candidate;
+          previous[neighbor.node] = smallest;
+          queue.enqueue(neighbor.node, candidate);
         }
       }
     }
-    return path.concat(smallest).reverse();
   }
-}
 
-const graph = new WeightedGraph();
+  return shortestPath.concat(start).reverse();
+};
+
+const graph = new Graph();
 graph.addVertex('A');
 graph.addVertex('B');
 graph.addVertex('C');
