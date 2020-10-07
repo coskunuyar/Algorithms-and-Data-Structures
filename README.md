@@ -1,3 +1,10 @@
+### Algorithms
+
+###### Searching & Sorting
+
+###### Dijkstra's Shortest Path
+
+
 ### Data Structres
 
 ###### SinglyLinkedList
@@ -15,10 +22,3 @@
 ###### Graph
 
 ###### HashTable
-
-
-### Algorithms
-
-###### Searching & Sorting
-
-###### Dijkstra's Shortest Path
