@@ -19,18 +19,6 @@
 
 ### Algorithms
 
-###### SinglyLinkedList
+###### Searching & Sorting
 
-###### DobulyLinkedList
-
-###### Queue
-
-###### Stack
-
-###### BinarySearchTree
-
-###### BinaryHeap
-
-###### Graph
-
-###### HashTable
+###### Dijkstra's Shortest Path
