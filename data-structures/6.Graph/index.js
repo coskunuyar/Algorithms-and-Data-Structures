@@ -1,5 +1,5 @@
 function Graph() {
-  this.adjList = [];
+  this.adjList = {};
 }
 
 Graph.prototype.addVertex = function (vertex) {
