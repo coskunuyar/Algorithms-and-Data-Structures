@@ -1,31 +1,31 @@
-const getDigit = (num , i) => {
-  return Math.floor(Math.abs(num) / Math.pow(10,i)) % 10;
+
+const getDigit = (num , index) => {
+  const result = Number(Math.abs(num).toString().split('').reverse()[index])
+  return result ? result : 0;
 }
 
-const digitCount = (num) => {
-  if(num === 0) return;
-  return Math.floor(Math.log10(Math.abs(num))) + 1;
-}
+const getDigitCount = num => Math.abs(num).toString().length;
 
-const mostDigits = (nums) => {
-  let maxDigits = 0;
-  nums.forEach(num => {
-    maxDigits = Math.max(maxDigits ,digitCount(num));
-  });
-  return maxDigits;
-}
-
-const radixSort = nums => {
-  let maxDigitCount = mostDigits(nums);
-  for(let k=0; k<maxDigitCount; k++){
-    let digitBuckets = Array.from({length: 10}, () => []);
-    for(let i=0; i<nums.length; i++){
-      let digit = getDigit(nums[i],k);
-      digitBuckets[digit].push(nums[i]);
-    }
-    nums = [].concat(...digitBuckets);
+const getMaxDigitCount = (arr) => {
+  let maxCount = 0;
+  for(let i=0; i<arr.length; i++){
+    maxCount = Math.max(maxCount , getDigitCount(arr[i]));
   }
-  return nums;
+  return maxCount;
 }
 
-console.log(radixSort([23,345,5467,12,2345,922852]));
+const radixSort = (arr) => {
+  const maxDigitCount = getMaxDigitCount(arr);
+  for(let i=0; i<maxDigitCount; i++){
+    const buckets = [[],[],[],[],[],[],[],[],[],[]];
+    for(let j=0; j<arr.length; j++){
+      const digit = getDigit(arr[j] , i);
+      buckets[digit].push(arr[j]);
+    }
+    arr = [];
+    buckets.forEach(bucket => {
+      arr = [...arr , ...bucket];
+    })
+  }
+  return arr;
+}
