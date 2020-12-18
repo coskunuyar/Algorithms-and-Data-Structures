@@ -5,7 +5,7 @@ class Node{
   }
 
   clearConnections(){
-    this.next = null;
+    delete this.next;
     return this;
   }
 }
