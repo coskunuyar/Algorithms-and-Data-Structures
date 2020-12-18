@@ -1,139 +1,134 @@
-function Node(value) {
-  this.value = value;
-  this.next = null;
-}
-
-function SSL() {
-  this.head = null;
-  this.tail = null;
-  this.length = 0;
-}
-
-SSL.prototype.push = function (value) {
-  const newNode = new Node(value);
-  if (this.length === 0) {
-    this.head = newNode;
-    this.tail = newNode;
-  } else {
-    this.tail.next = newNode;
-    this.tail = newNode;
+class Node{
+  constructor(value){
+    this.value = value;
+    this.next = null;
   }
-  this.length++;
-};
 
-SSL.prototype.unshift = function (value) {
-  if (this.length === 0) {
-    this.push(value);
-  } else {
+  clearConnections(){
+    this.next = null;
+    return this;
+  }
+}
+
+class SinglyLinkedList{
+  constructor(){
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  push(value){
+    const newNode = new Node(value);
+    if(this.length === 0){
+      this.head = newNode;
+      this.tail = newNode;
+    }else{
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+    return ++this.length;
+  }
+
+  unshift(value){
+    if(this.length === 0) return this.push(value);
     const newNode = new Node(value);
     newNode.next = this.head;
     this.head = newNode;
-    this.length++;
+    return ++this.length;
   }
-};
 
-SSL.prototype.pop = function () {
-  let poppedNode = this.tail;
-  if (this.length === 1) {
-    this.head = null;
-    this.tail = null;
-  } else {
-    let current = this.head;
-    let newTail = current;
-    while (current.next) {
-      newTail = current;
-      current = current.next;
+  pop(){
+    if(this.length === 0) return;
+    const poppedNode = this.tail;
+    if(this.length === 1){
+      this.head = null;
+      this.tail = null;
+    }else{
+      let newTail = this.head;
+      while(newTail.next){
+        if(newTail.next === this.tail) break;
+        newTail = newTail.next;
+      }
+      this.tail = newTail;
     }
-    newTail.next = null;
-    this.tail = newTail;
-  }
-  this.length--;
-  return poppedNode;
-};
-
-SSL.prototype.shift = function () {
-  if (this.length === 1) {
-    return this.pop();
-  } else {
-    let poppedNode = this.head;
-    this.head = poppedNode.next;
     this.length--;
-    return poppedNode;
+    return poppedNode.clearConnections();
   }
-};
 
-SSL.prototype.get = function (index) {
-  if (index < 0 || index > this.length - 1) return;
-  let counter = 0;
-  let current = this.head;
-  while (counter !== index) {
-    current = current.next;
-    counter++;
+  shift(){
+    if(this.length === 1) return this.pop();
+    const shiftedNode = this.head;
+    this.head = shiftedNode.next;
+    this.length--;
+    return shiftedNode.clearConnections();
   }
-  return current;
-};
 
-SSL.prototype.set = function (index, value) {
-  const foundNode = this.get(index);
-  if (!foundNode) return;
-  foundNode.value = value;
-};
-
-SSL.prototype.insert = function (index, value) {
-  if (index === 0) return this.unshift(value);
-  if (index === this.length - 1) return this.push(value);
-  const newNode = new Node(value);
-  const prev = this.get(index - 1);
-  const current = this.get(index);
-  prev.next = newNode;
-  newNode.next = current;
-  this.length++;
-};
-
-SSL.prototype.remove = function (index) {
-  if (index === 0) return this.shift();
-  if (index === this.length - 1) return this.pop();
-  let prev = this.get(index - 1);
-  prev.next = prev.next.next;
-  this.length--;
-};
-
-SSL.prototype.traverse = function () {
-  let current = this.head;
-  while (current) {
-    console.log(current.value);
-    current = current.next;
+  get(index){
+    if(index < 0 && index > this.length) return;
+    let current = this.head;
+    let count = 0;
+    while(count !== index){
+      current = current.next;
+      count++;
+    }
+    return current;
   }
-};
 
-SSL.prototype.reverse = function () {
-  if ([0, 1].includes(this.length)) return;
-  let prev = this.head;
-  let current = prev.next;
-  let next = current.next;
+  set(index , value){
+    const foundNode = this.get(index);
+    foundNode.value = value;
+    return foundNode;
+  }
 
-  while (next && next !== this.tail) {
+  insert(index , value){
+    if(index < 0 || this.length < index) return;
+    if(index === 0) return this.unshift(value);
+    if(index === this.length ) return this.push(value);
+    const newNode = new Node(value);
+    const prev = this.get(index - 1);
+    const next = this.get(index);
+    prev.next = newNode;
+    newNode.next = next;
+    return ++this.length;
+  }
+
+  reverse(){
+    if(this.length === 0 || this.length === 1) return;
+    let prev = this.head;
+    let current = this.head.next;
+    let next = this.head.next.next;
+
+    while( next !== this.tail && next){
+      current.next = prev;
+
+      prev = current;
+      current = next;
+      next = next.next;
+    }
+
+    next && (next.next = current);
     current.next = prev;
 
-    prev = current;
-    current = next;
-    next = next.next;
+    const temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+    this.tail.next = null;
   }
 
-  current.next = prev;
-  next.next = current;
+  traverse(){
+    let current = this.head;
+    while(current){
+      console.log(current.value);
+      current = current.next;
+    }
+  }
+}
 
-  let temp = this.head;
-  this.head = this.tail;
-  this.tail = temp;
-  this.tail.next = null;
-};
+const list = new SinglyLinkedList();
+list.push(1);
+list.push(2);
+list.push(3);
+list.unshift(0);
+list.insert(3,-999);
 
-const list = new SSL();
-
-// list.push(1);
-// list.push(2);
-// list.push(3);
-// list.push(4);
-// list.reverse();
-// list.traverse();
+list.traverse();
