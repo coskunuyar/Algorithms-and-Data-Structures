@@ -1,34 +1,30 @@
-
-const pivot = (arr, start = 0, end = arr.length - 1) => {
-  const swap = (array, idx1, idx2) => {
-    const temp = array[idx1];
-    array[idx1] = array[idx2];
-    array[idx2] = temp;
-  };
-
-  let pivotValue = arr[start];
-  let swapIdx = start;
-
-  for (let i = start + 1; i <= end; i++) {
-    if (pivotValue > arr[i]) {
-      swapIdx++;
-      swap(arr, swapIdx, i);
-    }
-  }
-  swap(arr, start, swapIdx);
-  return swapIdx;
-}
-
-
-const quickSort = (arr, left = 0, right = arr.length -1) => {
-  if(left < right){
-      let pivotIndex = pivot(arr, left, right)
-      quickSort(arr,left,pivotIndex-1);
-      quickSort(arr,pivotIndex+1,right);
+const quickSort = (arr , start = 0 , end = arr.length - 1) => {
+  if(start < end){
+    const swapIndex = pivot(arr , start , end);
+    quickSort(arr , start , swapIndex - 1);
+    quickSort(arr , swapIndex + 1 , end);
   }
   return arr;
-} 
-           
-console.log(quickSort([100,-3,2,4,6,9,1,2,5,3,23]));
+}
 
+const pivot = (arr , start = 0 , end = arr.length - 1) => {
+  const swap = (array , index1 , index2) => {
+    const temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp; 
+  }
 
+  const pivotValue = arr[start];
+  let swapIndex = start;
+  let i;
+  for(i=start; i<=end; i++){
+    if(arr[i] < pivotValue){
+      swapIndex++;
+      swap(arr,swapIndex , i)
+    }
+  }
+  swap(arr , swapIndex , start);
+  return swapIndex;
+}
+
+console.log(quickSort([3,1,2,4,5,-99]));
