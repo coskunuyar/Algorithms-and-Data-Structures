@@ -12,7 +12,7 @@ class Node{
   }
 }
 
-class Stack{
+class Queue{
   constructor(){
     this.head = null;
     this.tail = null;
@@ -26,35 +26,32 @@ class Stack{
       this.tail = newNode;
     }else{
       this.tail.next = newNode;
-      newNode.prev = this.tail;
       this.tail = newNode;
     }
     return ++this.length;
   }
 
-  pop(){
-    if(this.length <= 0) return;
-    const poppedNode = this.tail;
+  unshift(){
+    const shiftedNode = this.head;
     if(this.length === 1){
       this.head = null;
       this.tail = null;
     }else{
-      const newTail = this.tail.prev;
-      newTail.next = null;
-      this.tail = newTail;
+      this.head = this.head.next;
+      this.head.prev = null;
     }
     this.length--;
-    return poppedNode.clearConnections();
+    return shiftedNode.clearConnections();
   }
 }
 
-const stack = new Stack();
-stack.push(0);
-stack.push(1);
-stack.push(2);
-stack.push(3);
-stack.push(4);
+const queue = new Queue();
+queue.push(0);
+queue.push(1);
+queue.push(2);
+queue.push(3);
+queue.push(4);
 
 for(let i=0; i<5; i++){
-  console.log(stack.pop());
+  console.log(queue.unshift())
 }
