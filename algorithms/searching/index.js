@@ -1,33 +1,28 @@
-const linearSearch = (arr,value) => {
+const linearSearch = (arr , item) => {
   let index = -1;
   for(let i=0; i<arr.length; i++){
-    if(arr[i] === value) index = i;
+    if(arr[i] === item) index = i;
   }
   return index;
 }
 
-const binarySearch = (arr,value) => {
+const binarySeach = (arr , item) => {
   let start = 0;
   let end = arr.length - 1;
-  let middle = Math.floor((start + end ) / 2);
-
-  while(arr[middle] !== value && start <= end){
-    if(value < arr[middle]){
-      end = middle-1;
-    } else {
-      start = middle+1;
-    }
-    middle = Math.floor((start + end) / 2);
+  let mid = Math.floor((start + end) / 2);
+  while(arr[mid] !== item && start <= end){
+    item < arr[mid] ? (end = mid-1) : (start = mid+1);
+    mid = Math.floor((start + end) / 2);
   }
-  return arr[middle] === value ? middle : -1;
+  return arr[mid] === item ? mid : -1;
 }
 
-const naiveStringSearch = (text , value) => {
+const naiveStringSearch = (string , key) => {
   let count = 0;
-  for(let i=0; i<text.length; i++){
-    for(let j=0; j<value.length; j++){
-      if(value[j] !== text[i+j]) break;
-      if(j === value.length - 1) count++;
+  for(let i=0; i<string.length; i++){
+    for(let j=0; j<key.length; j++){
+      if(string[i+j] !== key[j]) break;
+      if(j === key.length - 1) count++;
     }
   }
   return count;
