@@ -1,111 +1,107 @@
-function Graph() {
-  this.adjList = {};
-}
-
-Graph.prototype.addVertex = function (vertex) {
-  if (!this.adjList[vertex]) this.adjList[vertex] = [];
-};
-
-Graph.prototype.addEdge = function (vertex1, vertex2) {
-  if (this.adjList[vertex1] && this.adjList[vertex2]) {
-    this.adjList[vertex1].push(vertex2);
-    this.adjList[vertex2].push(vertex1);
+class Graph{
+  constructor(){
+    this.adjList = {};
   }
-};
 
-Graph.prototype.removeEdge = function (vertex1, vertex2) {
-  if (this.adjList[vertex1] && this.adjList[vertex2]) {
-    this.adjList[vertex1] = this.adjList[vertex1].filter(
-      (vtx) => vtx !== vertex2
-    );
-    this.adjList[vertex2] = this.adjList[vertex1].filter(
-      (vtx) => vtx !== vertex1
-    );
+  addVertex(vertex){
+    if(!this.adjList[vertex]) this.adjList[vertex] = [];
   }
-};
+  
+  addEdge(vertex1 , vertex2){
+    if(this.adjList[vertex1] && this.adjList[vertex2]){
+      this.adjList[vertex1].push(vertex2);
+      this.adjList[vertex2].push(vertex1);
+    }
+  }
 
-Graph.prototype.removeVertex = function (vertex) {
-  if (this.adjList[vertex]) {
-    this.adjList[vertex].forEach((vtx) => {
-      this.removeEdge(vtx, vertex);
+  removeVertex(vertex){
+    this.adjList[vertex].filter(neighbour => {
+      this.removeEdge(vertex , neighbour);
     });
     delete this.adjList[vertex];
   }
-};
 
-Graph.prototype.BFS = function (startingVertex) {
-  const queue = [startingVertex];
-  const visited = {};
-  const result = [];
-  visited[startingVertex] = true;
-
-  while (queue.length) {
-    let current = queue.shift();
-    result.push(current);
-    this.adjList[current].forEach((ngh) => {
-      if (!visited[ngh]) {
-        visited[ngh] = true;
-        queue.push(ngh);
-      }
-    });
+  removeEdge(vertex1 , vertex2){
+    if(this.adjList[vertex1] && this.adjList[vertex2]){
+      this.adjList[vertex1] = this.adjList[vertex1].filter(vtx => vtx !== vertex2);
+      this.adjList[vertex2] = this.adjList[vertex2].filter(vtx => vtx !== vertex1);
+    }
   }
 
-  return result;
-};
+  bfs(start){
+    const result = [];
+    const visited = {}
+    const queue = [start];
 
-Graph.prototype.DFSIterative = function (startingVertex) {
-  const stack = [startingVertex];
-  const visited = {};
-  const result = [];
-  visited[startingVertex] = true;
+    visited[start] = true;
+    while(queue.length){
+      const poppedNode = queue.pop();
+      result.push(poppedNode);
+      this.adjList[poppedNode].forEach(ngh => {
+        if(!visited[ngh]){
+          visited[ngh] = true;
+          queue.push(ngh);
+        }
+      })
+    }
 
-  while (stack.length) {
-    let current = stack.pop();
-    result.push(current);
-    this.adjList[current].forEach((ngh) => {
-      if (!visited[ngh]) {
-        visited[ngh] = true;
-        stack.push(ngh);
-      }
-    });
+    return result;
   }
 
-  return result;
-};
+  dfsIterative(start){
+    const result = [];
+    const visited = {};
+    const stack = [start];
 
-Graph.prototype.DFSRecursive = function (startingVertex) {
-  const result = [];
-  const visited = {};
+    visited[start] = true;
+    while(stack.length){
+      const shiftedNode = stack.shift();
+      result.push(shiftedNode);
+      this.adjList[shiftedNode].forEach(ngh => {
+        if(!visited[ngh]){
+          visited[ngh] = true;
+          stack.push(ngh);
+        }
+      })
+    }
 
-  const traverse = (vertex) => {
-    visited[vertex] = true;
-    result.push(vertex);
-    this.adjList[vertex].forEach((ngh) => {
-      if (!visited[ngh]) {
-        traverse(ngh);
-      }
-    });
-  };
-  traverse(startingVertex);
-  return result;
-};
+    return result;
+  }
 
-// const graph = new Graph();
-// graph.addVertex('A');
-// graph.addVertex('B');
-// graph.addVertex('C');
-// graph.addVertex('D');
-// graph.addVertex('E');
-// graph.addVertex('F');
+  dfsRecursive(start){
+    const result = [];
+    const visited = {};
+    const traverse = (node) => {
+      result.push(node);
+      this.adjList[node].forEach(ngh => {
+        if(!visited[ngh]){
+          visited[ngh] = true;
+          traverse(ngh)
+        }
+      })
+    }
+    traverse(start);
+    return result;
+  }
 
-// graph.addEdge('A', 'B');
-// graph.addEdge('A', 'C');
-// graph.addEdge('B', 'D');
-// graph.addEdge('C', 'E');
-// graph.addEdge('D', 'E');
-// graph.addEdge('D', 'F');
-// graph.addEdge('E', 'F');
+}
 
-// console.log(graph.BFS('C'));
-// console.log(graph.DFSIterative('C'));
-// console.log(graph.DFSRecursive('C'));
+const graph = new Graph();
+graph.addVertex('A');
+graph.addVertex('B');
+graph.addVertex('C');
+graph.addVertex('D');
+graph.addVertex('E');
+graph.addVertex('F');
+
+graph.addEdge('A', 'B');
+graph.addEdge('A', 'C');
+graph.addEdge('B', 'D');
+graph.addEdge('C', 'E');
+graph.addEdge('D', 'E');
+graph.addEdge('D', 'F');
+graph.addEdge('E', 'F');
+
+console.log(graph.bfs('A'));
+console.log(graph.dfsIterative('A'));
+console.log(graph.dfsRecursive('A'));
