@@ -19,6 +19,7 @@ class Stack{
     this.length = 0;
   }
 
+  // Average O(1)
   push(value){
     const newNode = new Node(value);
     if(this.length === 0){
@@ -32,6 +33,7 @@ class Stack{
     return ++this.length;
   }
 
+  // Average O(1)
   pop(){
     if(this.length <= 0) return;
     const poppedNode = this.tail;
