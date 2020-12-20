@@ -3,11 +3,13 @@ class BinaryMaxHeap{
     this.storage = [];
   }
 
+  // Average O(logn)
   push(value){
     this.storage.push(value);
     this.bubbleUp();
   }
 
+  // Average O(logn)
   shift(){
     const max = this.storage[0];
     const poppedNode = this.storage.pop();
