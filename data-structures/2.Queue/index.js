@@ -19,6 +19,7 @@ class Queue{
     this.length = 0;
   }
 
+  // Average O(1)
   push(value){
     const newNode = new Node(value);
     if(this.length === 0){
@@ -31,6 +32,7 @@ class Queue{
     return ++this.length;
   }
 
+  // Average O(1)
   unshift(){
     const shiftedNode = this.head;
     if(this.length === 1){
