@@ -1,3 +1,5 @@
+// Big O 
+// Average: O(nlogn)
 const mergeSort = (arr) => {
   if(arr.length <= 1) return arr;
   const mid = Math.floor(arr.length / 2);
