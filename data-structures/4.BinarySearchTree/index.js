@@ -11,6 +11,7 @@ class BinarySearchTree{
     this.root = null;
   }
 
+  // Average O(logn)
   insert(value){
     const newNode = new Node(value);
     if(!this.root){
@@ -38,6 +39,7 @@ class BinarySearchTree{
     }
   }
 
+  // Average O(n)
   bfs(){
     if(!this.root) return;
     const visited = [];
@@ -51,6 +53,7 @@ class BinarySearchTree{
     return visited;
   }
 
+  // Average O(n)
   dfsPreOrder(){
     if(!this.root) return;
     const visited = [];
@@ -63,6 +66,7 @@ class BinarySearchTree{
     return visited;
   }
 
+  // Average O(n)
   dfsInOrder(){
     if(!this.root) return;
     const visited = [];
@@ -75,6 +79,7 @@ class BinarySearchTree{
     return visited;
   }
 
+  // Average O(n)
   dfsPostOrder(){
     if(!this.root) return;
     const visited = [];
