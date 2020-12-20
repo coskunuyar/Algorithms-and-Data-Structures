@@ -1,3 +1,5 @@
+// Big O
+// Average: O(n^2)
 const insertion = (arr) => {
   for(let i=0; i<arr.length; i++){
     const currentValue = arr[i];
