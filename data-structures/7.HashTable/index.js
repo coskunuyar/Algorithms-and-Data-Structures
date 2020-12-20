@@ -14,12 +14,14 @@ class HashTable{
     return Math.abs(hash);
   }
 
+  // Average O(1)
   set(key , value){
     const index = this._hash(key);
     if(!this.storage[index]) this.storage[index] = [];
     this.storage[index].push({ key , value });
   }
 
+  // Average O(1)
   get(key){
     const index = this._hash(key);
     let foundItem;
@@ -29,6 +31,7 @@ class HashTable{
     return foundItem;
   }
 
+  // Average O(N^2)
   keys(){
     const keys = [];
     this.storage.forEach(items => {
@@ -39,6 +42,7 @@ class HashTable{
     return keys;
   }
 
+  // Average O(N^2)
   values(){
     const values = [];
     this.storage.forEach(items => {
