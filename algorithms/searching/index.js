@@ -1,3 +1,7 @@
+// Big O
+// Best: O(1)
+// Average: O(n)
+// Worst: O(n)
 const linearSearch = (arr , item) => {
   let index = -1;
   for(let i=0; i<arr.length; i++){
@@ -6,6 +10,10 @@ const linearSearch = (arr , item) => {
   return index;
 }
 
+// Big O
+// Best: O(1)
+// Average: O(log2n)
+// Worst: O(log2n)
 const binarySeach = (arr , item) => {
   let start = 0;
   let end = arr.length - 1;
@@ -17,6 +25,10 @@ const binarySeach = (arr , item) => {
   return arr[mid] === item ? mid : -1;
 }
 
+// Big O
+// Best: O(1)
+// Average: O(n)
+// Worst: O(n)
 const naiveStringSearch = (string , key) => {
   let count = 0;
   for(let i=0; i<string.length; i++){
