@@ -1,3 +1,5 @@
+// Big O
+// Average: O(nlogn)
 const quickSort = (arr , start = 0 , end = arr.length - 1) => {
   if(start < end){
     const swapIndex = pivot(arr , start , end);
