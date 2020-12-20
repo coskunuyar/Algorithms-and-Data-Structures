@@ -1,3 +1,5 @@
+// Big O 
+// Average: O(kn)
 const radixSort = (arr) => {
   const maxDigitCount = getMaxDigitCount(arr);
   for(let i=0; i<maxDigitCount; i++){
