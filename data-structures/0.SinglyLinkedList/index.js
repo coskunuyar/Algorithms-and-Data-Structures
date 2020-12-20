@@ -17,6 +17,7 @@ class SinglyLinkedList{
     this.length = 0;
   }
 
+  // Average: O(1)
   push(value){
     const newNode = new Node(value);
     if(this.length === 0){
@@ -29,6 +30,7 @@ class SinglyLinkedList{
     return ++this.length;
   }
 
+  // Average: O(1)
   unshift(value){
     if(this.length === 0) return this.push(value);
     const newNode = new Node(value);
@@ -37,6 +39,7 @@ class SinglyLinkedList{
     return ++this.length;
   }
 
+  // Average: O(n)
   pop(){
     if(this.length === 0) return;
     const poppedNode = this.tail;
@@ -55,6 +58,7 @@ class SinglyLinkedList{
     return poppedNode.clearConnections();
   }
 
+  // Average: O(1)
   shift(){
     if(this.length === 1) return this.pop();
     const shiftedNode = this.head;
@@ -63,6 +67,7 @@ class SinglyLinkedList{
     return shiftedNode.clearConnections();
   }
 
+  // Average: O(n)
   get(index){
     if(index < 0 && index > this.length) return;
     let current = this.head;
@@ -74,12 +79,14 @@ class SinglyLinkedList{
     return current;
   }
 
+  // Average: O(n)
   set(index , value){
     const foundNode = this.get(index);
     foundNode.value = value;
     return foundNode;
   }
 
+  // Average: O(n)
   insert(index , value){
     if(index < 0 || this.length < index) return;
     if(index === 0) return this.unshift(value);
