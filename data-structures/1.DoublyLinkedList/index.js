@@ -19,6 +19,7 @@ class DoublyLinkedList{
     this.length = 0;
   }
 
+  // Average O(1)
   push(value){
     const newNode = new Node(value);
     if(this.length === 0){
@@ -32,6 +33,7 @@ class DoublyLinkedList{
     return ++this.length;
   }
 
+  // Average O(1)
   unshift(value){
     if(this.length === 0) return this.push(value);
     const newNode = new Node(value);
@@ -41,6 +43,7 @@ class DoublyLinkedList{
     return ++this.length;
   }
 
+  // Average O(1)
   pop(){
     if(this.length === 0) return;
     const poppedNode = this.tail;
@@ -55,6 +58,7 @@ class DoublyLinkedList{
     return poppedNode.clearConnections();
   }
 
+  // Average O(1)
   shift(){
     if(this.length === 0) return this.pop();
     const shiftedNode = this.head;
@@ -69,6 +73,7 @@ class DoublyLinkedList{
     return shiftedNode.clearConnections();
   }
 
+  // Average O(N)
   get(index){
     if(index < 0 || index > this.length-1) return;
     const mid = Math.floor(this.length / 2);
@@ -92,12 +97,14 @@ class DoublyLinkedList{
     return current;
   }
 
+  // Average O(N)
   set(index , value){
     const foundNode = this.get(index);
     foundNode && (foundNode.value = value);
     return foundNode;
   }
 
+  // Average O(N)
   insert(index , value){
     if(index < 0 || index > this.length -1) return;
     const newNode = new Node(value);
@@ -110,6 +117,7 @@ class DoublyLinkedList{
     return ++this.length;
   }
 
+  // Average O(N)
   remove(index){
     if(index === 0 ) return this.shift();
     if(index === this.length - 1) return this.pop();
