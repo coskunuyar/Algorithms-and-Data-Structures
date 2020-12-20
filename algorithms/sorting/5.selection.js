@@ -1,3 +1,5 @@
+// Big O
+// Average: O(n^2)
 const selectionSort = (arr) => {
   for(let i=0; i<arr.length; i++){
     let lowest = i;
