@@ -3,10 +3,12 @@ class Graph{
     this.adjList = {};
   }
 
+  // Average O(1)
   addVertex(vertex){
     if(!this.adjList[vertex]) this.adjList[vertex] = [];
   }
   
+  // Average O(1)
   addEdge(vertex1 , vertex2){
     if(this.adjList[vertex1] && this.adjList[vertex2]){
       this.adjList[vertex1].push(vertex2);
@@ -14,6 +16,7 @@ class Graph{
     }
   }
 
+  // Average O(N)
   removeVertex(vertex){
     this.adjList[vertex].filter(neighbour => {
       this.removeEdge(vertex , neighbour);
@@ -21,6 +24,7 @@ class Graph{
     delete this.adjList[vertex];
   }
 
+  // Average O(N)
   removeEdge(vertex1 , vertex2){
     if(this.adjList[vertex1] && this.adjList[vertex2]){
       this.adjList[vertex1] = this.adjList[vertex1].filter(vtx => vtx !== vertex2);
@@ -28,6 +32,7 @@ class Graph{
     }
   }
 
+  // Average O(N)
   bfs(start){
     const result = [];
     const visited = {}
@@ -48,6 +53,7 @@ class Graph{
     return result;
   }
 
+  // Average O(N)
   dfsIterative(start){
     const result = [];
     const visited = {};
@@ -68,6 +74,7 @@ class Graph{
     return result;
   }
 
+  // Average O(N)
   dfsRecursive(start){
     const result = [];
     const visited = {};
