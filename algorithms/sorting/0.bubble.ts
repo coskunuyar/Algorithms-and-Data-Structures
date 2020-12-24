@@ -1,6 +1,6 @@
-// Big O
+
 // Average: O(n^2)
-const bubbleSort = (arr) => {
+const bubbleSort = (arr: number[]): number[] => {
   for(let i=0; i<arr.length; i++){
     for(let j=0; j<arr.length; j++){
       if(arr[j] > arr[j+1]){
@@ -13,4 +13,4 @@ const bubbleSort = (arr) => {
   return arr;
 }
 
-console.log(bubbleSort([5,4,32,1]));
+console.log(bubbleSort([5,4,3,2,1,99]));
