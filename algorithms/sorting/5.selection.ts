@@ -1,6 +1,6 @@
-// Big O
+
 // Average: O(n^2)
-const selectionSort = (arr) => {
+const selectionSort = (arr: number[]) : number[] => {
   for(let i=0; i<arr.length; i++){
     let lowest = i;
     for(let j=i; j<arr.length; j++){
@@ -17,4 +17,4 @@ const selectionSort = (arr) => {
   return arr;
 }
 
-console.log(selectionSort([5,4,3,2,1,99]));
+console.log(selectionSort([5,4,3,1,99]));
