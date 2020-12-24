@@ -1,6 +1,5 @@
-// Big O 
 // Average: O(kn)
-const radixSort = (arr) => {
+const radixSort = (arr: number[]):number[] => {
   const maxDigitCount = getMaxDigitCount(arr);
   for(let i=0; i<maxDigitCount; i++){
     const digitBuckets = [[],[],[],[],[],[],[],[],[],[]];
@@ -16,7 +15,7 @@ const radixSort = (arr) => {
   return arr;
 }
 
-const getMaxDigitCount = (arr) => {
+const getMaxDigitCount = (arr: number[]):number => {
   let maxDigitCount = 0;
   for(let i=0; i<arr.length; i++){
     maxDigitCount = Math.max(maxDigitCount , Math.abs(arr[i]).toString().length)
@@ -24,7 +23,7 @@ const getMaxDigitCount = (arr) => {
   return maxDigitCount;
 }
 
-const getDigit = (num , index ) => {
+const getDigit = (num: number , index: number ):number => {
   const result = Number(Math.abs(num).toString().split('').reverse()[index])
   return result ? result : 0;
 }
