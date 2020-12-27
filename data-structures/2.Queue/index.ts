@@ -1,11 +1,15 @@
-class Node{
-  constructor(value){
+class QueueNode{
+  value: number;
+  next: QueueNode;
+  prev: QueueNode;
+
+  constructor(value: number){
     this.value = value;
     this.next = null;
     this.prev = null;
   }
 
-  clearConnections(){
+  public clearConnections(): QueueNode{
     delete this.next;
     delete this.prev;
     return this;
@@ -13,6 +17,10 @@ class Node{
 }
 
 class Queue{
+  head: QueueNode;
+  tail: QueueNode;
+  length: number;
+
   constructor(){
     this.head = null;
     this.tail = null;
@@ -20,8 +28,8 @@ class Queue{
   }
 
   // Average O(1)
-  push(value){
-    const newNode = new Node(value);
+  public push(value: number): number{
+    const newNode = new QueueNode(value);
     if(this.length === 0){
       this.head = newNode;
       this.tail = newNode;
@@ -33,7 +41,7 @@ class Queue{
   }
 
   // Average O(1)
-  unshift(){
+  public unshift(): QueueNode{
     const shiftedNode = this.head;
     if(this.length === 1){
       this.head = null;

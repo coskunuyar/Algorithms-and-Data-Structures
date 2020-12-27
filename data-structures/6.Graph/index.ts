@@ -1,15 +1,17 @@
 class Graph{
+  adjList: object;
+
   constructor(){
     this.adjList = {};
   }
 
   // Average O(1)
-  addVertex(vertex){
+  public addVertex(vertex: string): void{
     if(!this.adjList[vertex]) this.adjList[vertex] = [];
   }
   
   // Average O(1)
-  addEdge(vertex1 , vertex2){
+  public addEdge(vertex1: string, vertex2: string): void{
     if(this.adjList[vertex1] && this.adjList[vertex2]){
       this.adjList[vertex1].push(vertex2);
       this.adjList[vertex2].push(vertex1);
@@ -17,7 +19,7 @@ class Graph{
   }
 
   // Average O(N)
-  removeVertex(vertex){
+  public removeVertex(vertex: string): void{
     this.adjList[vertex].filter(neighbour => {
       this.removeEdge(vertex , neighbour);
     });
@@ -25,7 +27,7 @@ class Graph{
   }
 
   // Average O(N)
-  removeEdge(vertex1 , vertex2){
+  public removeEdge(vertex1: string , vertex2: string): void{
     if(this.adjList[vertex1] && this.adjList[vertex2]){
       this.adjList[vertex1] = this.adjList[vertex1].filter(vtx => vtx !== vertex2);
       this.adjList[vertex2] = this.adjList[vertex2].filter(vtx => vtx !== vertex1);
@@ -33,7 +35,7 @@ class Graph{
   }
 
   // Average O(N)
-  bfs(start){
+  public bfs(start: string): string[]{
     const result = [];
     const visited = {}
     const queue = [start];
@@ -54,7 +56,7 @@ class Graph{
   }
 
   // Average O(N)
-  dfsIterative(start){
+  public dfsIterative(start: string): string[]{
     const result = [];
     const visited = {};
     const stack = [start];
@@ -75,10 +77,10 @@ class Graph{
   }
 
   // Average O(N)
-  dfsRecursive(start){
+  public dfsRecursive(start: string): string[]{
     const result = [];
     const visited = {};
-    const traverse = (node) => {
+    const traverse = (node: string) => {
       result.push(node);
       this.adjList[node].forEach(ngh => {
         if(!visited[ngh]){

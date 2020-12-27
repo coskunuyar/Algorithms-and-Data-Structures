@@ -1,11 +1,15 @@
-class Node{
+class StackNode{
+  value: number;
+  next: StackNode;
+  prev: StackNode;
+
   constructor(value){
     this.value = value;
     this.next = null;
     this.prev = null;
   }
 
-  clearConnections(){
+  public clearConnections(): StackNode{
     delete this.next;
     delete this.prev;
     return this;
@@ -13,6 +17,10 @@ class Node{
 }
 
 class Stack{
+  head: StackNode;
+  tail: StackNode;
+  length: number;
+
   constructor(){
     this.head = null;
     this.tail = null;
@@ -20,8 +28,8 @@ class Stack{
   }
 
   // Average O(1)
-  push(value){
-    const newNode = new Node(value);
+  public push(value: number): number{
+    const newNode = new StackNode(value);
     if(this.length === 0){
       this.head = newNode;
       this.tail = newNode;
@@ -34,7 +42,7 @@ class Stack{
   }
 
   // Average O(1)
-  pop(){
+  public pop(): StackNode{
     if(this.length <= 0) return;
     const poppedNode = this.tail;
     if(this.length === 1){

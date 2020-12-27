@@ -1,4 +1,8 @@
-class Node{
+class TreeNode{
+  value: Number;
+  left: TreeNode;
+  right: TreeNode;
+  
   constructor(value){
     this.value = value;
     this.left = null;
@@ -7,13 +11,15 @@ class Node{
 }
 
 class BinarySearchTree{
+  root: TreeNode;
+
   constructor(){
     this.root = null;
   }
 
   // Average O(logn)
-  insert(value){
-    const newNode = new Node(value);
+  public insert(value: number){
+    const newNode = new TreeNode(value);
     if(!this.root){
       this.root = newNode;
     }else{
@@ -40,7 +46,7 @@ class BinarySearchTree{
   }
 
   // Average O(n)
-  bfs(){
+  public bfs(): number[]{
     if(!this.root) return;
     const visited = [];
     const stack = [this.root];
@@ -54,7 +60,7 @@ class BinarySearchTree{
   }
 
   // Average O(n)
-  dfsPreOrder(){
+  public dfsPreOrder(): number[]{
     if(!this.root) return;
     const visited = [];
     const traverse = (node) => {
@@ -67,7 +73,7 @@ class BinarySearchTree{
   }
 
   // Average O(n)
-  dfsInOrder(){
+  public dfsInOrder(): number[]{
     if(!this.root) return;
     const visited = [];
     const traverse = (node) => {
@@ -80,7 +86,7 @@ class BinarySearchTree{
   }
 
   // Average O(n)
-  dfsPostOrder(){
+  public dfsPostOrder(): number[]{
     if(!this.root) return;
     const visited = [];
     const traverse = (node) => {

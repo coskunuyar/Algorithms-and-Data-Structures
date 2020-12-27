@@ -1,16 +1,18 @@
 class BinaryMaxHeap{
+  storage: number[];
+
   constructor(){
     this.storage = [];
   }
 
   // Average O(logn)
-  push(value){
+  public push(value: number): void{
     this.storage.push(value);
     this.bubbleUp();
   }
 
   // Average O(logn)
-  shift(){
+  public shift(): number{
     const max = this.storage[0];
     const poppedNode = this.storage.pop();
     if(this.storage.length > 0){
@@ -20,7 +22,7 @@ class BinaryMaxHeap{
     return max;
   }
 
-  bubbleUp(){
+  public bubbleUp(): void{
     let currentIndex = this.storage.length - 1;
     let parentIndex = Math.floor(( currentIndex -1 ) / 2);
     while(this.storage[currentIndex] > this.storage[parentIndex]){
@@ -33,7 +35,7 @@ class BinaryMaxHeap{
     }
   }
 
-  sinkDown(){
+  public sinkDown(): void{
     let currentIndex = 0;
     while(true){
       let leftChildIndex = 2*currentIndex + 1;
@@ -42,7 +44,7 @@ class BinaryMaxHeap{
       let rightChild = this.storage[rightChildIndex];
       let current = this.storage[currentIndex];
 
-      let swapIndex;
+      let swapIndex: number;
       if(leftChildIndex < this.storage.length && leftChild > current){
         swapIndex = leftChildIndex;
       }

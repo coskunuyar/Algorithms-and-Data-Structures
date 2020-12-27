@@ -1,11 +1,15 @@
-class Node{
+class DoubleListNode{
+  value: number;
+  next: DoubleListNode;
+  prev: DoubleListNode;
+
   constructor(value){
     this.value = value;
     this.next = null;
     this.prev = null;
   }
 
-  clearConnections(){
+  public clearConnections(): DoubleListNode{
     delete this.next;
     delete this.prev;
     return this;
@@ -13,6 +17,10 @@ class Node{
 }
 
 class DoublyLinkedList{
+  head: DoubleListNode;
+  tail: DoubleListNode;
+  length: number;
+
   constructor(){
     this.head = null;
     this.tail = null;
@@ -20,8 +28,8 @@ class DoublyLinkedList{
   }
 
   // Average O(1)
-  push(value){
-    const newNode = new Node(value);
+  public push(value: number): number{
+    const newNode = new DoubleListNode(value);
     if(this.length === 0){
       this.head = newNode;
       this.tail = newNode;
@@ -34,9 +42,9 @@ class DoublyLinkedList{
   }
 
   // Average O(1)
-  unshift(value){
+  public unshift(value: number): number{
     if(this.length === 0) return this.push(value);
-    const newNode = new Node(value);
+    const newNode = new DoubleListNode(value);
     newNode.next = this.head;
     this.head.prev = newNode;
     this.head = newNode;
@@ -44,7 +52,7 @@ class DoublyLinkedList{
   }
 
   // Average O(1)
-  pop(){
+  public pop(): DoubleListNode{
     if(this.length === 0) return;
     const poppedNode = this.tail;
     if(this.length === 1){
@@ -59,7 +67,7 @@ class DoublyLinkedList{
   }
 
   // Average O(1)
-  shift(){
+  public shift(): DoubleListNode{
     if(this.length === 0) return this.pop();
     const shiftedNode = this.head;
     if(this.length === 1){
@@ -74,7 +82,7 @@ class DoublyLinkedList{
   }
 
   // Average O(N)
-  get(index){
+  public get(index: number): DoubleListNode{
     if(index < 0 || index > this.length-1) return;
     const mid = Math.floor(this.length / 2);
     let current;
@@ -98,16 +106,16 @@ class DoublyLinkedList{
   }
 
   // Average O(N)
-  set(index , value){
+  public set(index: number , value: number): DoubleListNode{
     const foundNode = this.get(index);
     foundNode && (foundNode.value = value);
     return foundNode;
   }
 
   // Average O(N)
-  insert(index , value){
+  public insert(index: number , value: number): number{
     if(index < 0 || index > this.length -1) return;
-    const newNode = new Node(value);
+    const newNode = new DoubleListNode(value);
     const prev = this.get(index-1);
     const next = this.get(index);
     prev.next = newNode;
@@ -118,7 +126,7 @@ class DoublyLinkedList{
   }
 
   // Average O(N)
-  remove(index){
+  public remove(index: number): DoubleListNode{
     if(index === 0 ) return this.shift();
     if(index === this.length - 1) return this.pop();
     const prev = this.get(index-1);
@@ -129,7 +137,7 @@ class DoublyLinkedList{
     return current.clearConnections();
   }
 
-  traverse(){
+  public traverse(): void{
     let current = this.head;
     while(current){
       console.log(current.value);

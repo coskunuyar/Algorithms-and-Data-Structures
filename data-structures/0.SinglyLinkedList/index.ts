@@ -1,16 +1,23 @@
-class Node{
-  constructor(value){
+class ListNode{
+  value: any;
+  next: ListNode;
+
+  constructor(value: any){
     this.value = value;
     this.next = null;
   }
 
-  clearConnections(){
+  public clearConnections(): ListNode{
     delete this.next;
     return this;
   }
 }
 
 class SinglyLinkedList{
+  head: ListNode;
+  tail: ListNode;
+  length: number;
+
   constructor(){
     this.head = null;
     this.tail = null;
@@ -18,8 +25,8 @@ class SinglyLinkedList{
   }
 
   // Average: O(1)
-  push(value){
-    const newNode = new Node(value);
+  public push(value: any): number{
+    const newNode = new ListNode(value);
     if(this.length === 0){
       this.head = newNode;
       this.tail = newNode;
@@ -31,16 +38,16 @@ class SinglyLinkedList{
   }
 
   // Average: O(1)
-  unshift(value){
+  public unshift(value: any): number{
     if(this.length === 0) return this.push(value);
-    const newNode = new Node(value);
+    const newNode = new ListNode(value);
     newNode.next = this.head;
     this.head = newNode;
     return ++this.length;
   }
 
   // Average: O(n)
-  pop(){
+  public pop(): ListNode{
     if(this.length === 0) return;
     const poppedNode = this.tail;
     if(this.length === 1){
@@ -59,7 +66,7 @@ class SinglyLinkedList{
   }
 
   // Average: O(1)
-  shift(){
+  public shift(): ListNode{
     if(this.length === 1) return this.pop();
     const shiftedNode = this.head;
     this.head = shiftedNode.next;
@@ -68,7 +75,7 @@ class SinglyLinkedList{
   }
 
   // Average: O(n)
-  get(index){
+  public get(index: number): ListNode{
     if(index < 0 && index > this.length) return;
     let current = this.head;
     let count = 0;
@@ -80,18 +87,18 @@ class SinglyLinkedList{
   }
 
   // Average: O(n)
-  set(index , value){
+  public set(index: number , value: any): ListNode{
     const foundNode = this.get(index);
     foundNode.value = value;
     return foundNode;
   }
 
   // Average: O(n)
-  insert(index , value){
+  public insert(index: number , value: any): number{
     if(index < 0 || this.length < index) return;
     if(index === 0) return this.unshift(value);
     if(index === this.length ) return this.push(value);
-    const newNode = new Node(value);
+    const newNode = new ListNode(value);
     const prev = this.get(index - 1);
     const next = this.get(index);
     prev.next = newNode;
@@ -99,7 +106,7 @@ class SinglyLinkedList{
     return ++this.length;
   }
 
-  reverse(){
+  public reverse(): void{
     if(this.length === 0 || this.length === 1) return;
     let prev = this.head;
     let current = this.head.next;
@@ -122,7 +129,7 @@ class SinglyLinkedList{
     this.tail.next = null;
   }
 
-  traverse(){
+  public traverse(): void{
     let current = this.head;
     while(current){
       console.log(current.value);

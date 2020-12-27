@@ -1,10 +1,18 @@
+interface TableItem{
+  key: string;
+  value: any;
+}
+
 class HashTable{
+  storage: TableItem[][];
+  salt: string;
+
   constructor(size = 40){
     this.storage = new Array(size);
     this.salt = Math.random().toString().replace('.','');
   }
 
-  _hash(key){
+  private _hash(key: string): number{
     key += this.salt;
     const prime_number = 31;
     let hash = 0;
@@ -15,14 +23,14 @@ class HashTable{
   }
 
   // Average O(1)
-  set(key , value){
+  public set(key: string , value: any){
     const index = this._hash(key);
     if(!this.storage[index]) this.storage[index] = [];
     this.storage[index].push({ key , value });
   }
 
   // Average O(1)
-  get(key){
+  public get(key: string ): TableItem{
     const index = this._hash(key);
     let foundItem;
     this.storage[index].forEach(item => {
@@ -32,7 +40,7 @@ class HashTable{
   }
 
   // Average O(N^2)
-  keys(){
+  public keys(): string[]{
     const keys = [];
     this.storage.forEach(items => {
       items.forEach(item => {
@@ -43,7 +51,7 @@ class HashTable{
   }
 
   // Average O(N^2)
-  values(){
+  public values(): any[]{
     const values = [];
     this.storage.forEach(items => {
       items.forEach(item => {
