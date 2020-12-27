@@ -1,77 +1,82 @@
 class Queue{
-  storage: any[];
+  storage: { node: string , weight: number }[];
 
   constructor(){
     this.storage = [];
   }
 
-  public enqueue(key: string, priority: number): void {
-    this.storage = this.storage.filter((item) => item.key !== key);
-    this.storage.push({ key, priority });
-    this.storage.sort((a, b) => a.priority - b.priority);
-  };
-  
-  public dequeue(): { key: string , priority: number }{
+  public push(node: string , weight: number): void{
+    this.storage = this.storage.filter(item => item.node !== node);
+    this.storage.push({ node , weight });
+    this.sort();
+  }
+
+  public shift():{ node: string , weight: number }{
     return this.storage.shift();
-  }; 
+  }
+
+  public sort(): void{
+    this.storage.sort((a,b) => a.weight - b.weight );
+  }
+
 }
 
 class Graph{
-  adjacencyList: object;
+  adjList: object;
 
   constructor(){
-    this.adjacencyList = {};
+    this.adjList = {};
   }
 
-  public addVertex(vertex: string): void {
-    if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
-  };
+  public addVertex(vertex: string): void{
+    this.adjList[vertex] = [];
+  }
 
   public addEdge(vertex1: string, vertex2: string, weight: number): void{
-    this.adjacencyList[vertex1].push({ node: vertex2, weight });
-    this.adjacencyList[vertex2].push({ node: vertex1, weight });
-  };
-  
-  public dijkstra(start: string, finish: string): string[]{
+    this.adjList[vertex1].push({ node: vertex2 , weight });
+    this.adjList[vertex2].push({ node: vertex1 , weight });
+  }
+
+  public dijkstra(start: string , end: string): string{
     const queue = new Queue();
     const distances = {};
     const previous = {};
-    const shortestPath = [];
-    let smallest, candidate;
-  
-    for (let node in this.adjacencyList) {
-      if (node === start) {
-        distances[node] = 0;
-        queue.enqueue(node, 0);
-      } else {
+    const shortesPath = [];
+
+    for(let node in this.adjList){
+      if(node === start){
+        distances[node] = 0
+        queue.push(node,0);
+      }else{
         distances[node] = Infinity;
-        queue.enqueue(node, Infinity);
+        queue.push(node,Infinity);
       }
       previous[node] = null;
     }
-  
-    while (queue.storage.length) {
-      smallest = queue.dequeue().key;
-      if (smallest === finish) {
-        while (previous[smallest]) {
-          shortestPath.push(smallest);
-          smallest = previous[smallest];
+
+    while(queue.storage.length){
+      const shiftedNode = queue.shift();
+      if(shiftedNode.node === end){
+        let current = shiftedNode.node;
+        while(previous[current]){
+          shortesPath.push(current);
+          current = previous[current];
         }
-        break;
-      } else {
-        for (let neighbor of this.adjacencyList[smallest]) {
-          candidate = distances[smallest] + neighbor.weight;
-          if (candidate < distances[neighbor.node]) {
+        shortesPath.push(start);
+      }else{
+        for(let neighbor of this.adjList[shiftedNode.node]){
+          const candidate = shiftedNode.weight + neighbor.weight
+          if(candidate < distances[neighbor.node]){
             distances[neighbor.node] = candidate;
-            previous[neighbor.node] = smallest;
-            queue.enqueue(neighbor.node, candidate);
+            previous[neighbor.node] = shiftedNode.node;
+            queue.push(neighbor.node, candidate);
           }
-        }
+        }   
       }
     }
-  
-    return shortestPath.concat(start).reverse();
-  };
+
+    return shortesPath.reverse().join(' -> ');
+  }
 }
 
 const graph = new Graph();
