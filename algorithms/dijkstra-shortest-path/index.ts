@@ -1,5 +1,10 @@
+interface IQueueNode{
+  node: string;
+  weight: number;
+}
+
 class Queue{
-  storage: { node: string , weight: number }[];
+  storage: IQueueNode[];
 
   constructor(){
     this.storage = [];
@@ -11,45 +16,47 @@ class Queue{
     this.sort();
   }
 
-  public shift():{ node: string , weight: number }{
+  public shift(): IQueueNode{
     return this.storage.shift();
   }
 
-  public sort(): void{
-    this.storage.sort((a,b) => a.weight - b.weight );
+  private sort(): void{
+    this.storage.sort((a,b) => a.weight - b.weight);
   }
 
 }
 
 class Graph{
   adjList: object;
-
+  
   constructor(){
     this.adjList = {};
   }
 
   public addVertex(vertex: string): void{
-    this.adjList[vertex] = [];
+    if(!this.adjList[vertex]) this.adjList[vertex] = [];
   }
 
-  public addEdge(vertex1: string, vertex2: string, weight: number): void{
-    this.adjList[vertex1].push({ node: vertex2 , weight });
-    this.adjList[vertex2].push({ node: vertex1 , weight });
+  public addEdge(vertex1: string , vertex2: string , weight: number): void{
+    if(this.adjList[vertex1] && this.adjList[vertex2]){
+      this.adjList[vertex1].push({ node: vertex2 , weight });
+      this.adjList[vertex2].push({ node: vertex1 , weight });
+    }
   }
 
   public dijkstra(start: string , end: string): string{
     const queue = new Queue();
     const distances = {};
     const previous = {};
-    const shortesPath = [];
+    const shortestPath = [];
 
     for(let node in this.adjList){
       if(node === start){
-        distances[node] = 0
-        queue.push(node,0);
+        distances[node] = 0;
+        queue.push(node , 0);
       }else{
         distances[node] = Infinity;
-        queue.push(node,Infinity);
+        queue.push(node , Infinity);
       }
       previous[node] = null;
     }
@@ -59,24 +66,24 @@ class Graph{
       if(shiftedNode.node === end){
         let current = shiftedNode.node;
         while(previous[current]){
-          shortesPath.push(current);
+          shortestPath.push(current);
           current = previous[current];
         }
-        shortesPath.push(start);
+        shortestPath.push(start);
       }else{
         for(let neighbor of this.adjList[shiftedNode.node]){
-          const candidate = shiftedNode.weight + neighbor.weight
+          const candidate = shiftedNode.weight + neighbor.weight;
           if(candidate < distances[neighbor.node]){
             distances[neighbor.node] = candidate;
             previous[neighbor.node] = shiftedNode.node;
-            queue.push(neighbor.node, candidate);
+            queue.push(neighbor.node , candidate);
           }
-        }   
+        }
       }
     }
-
-    return shortesPath.reverse().join(' -> ');
+    return shortestPath.reverse().join(' -> ');
   }
+
 }
 
 const graph = new Graph();
